@@ -2,20 +2,22 @@
 <h4>Creates an ARP Spoofer to test and illustrate the use of 
 on path attacks.
 </h4>
-
+<p>
 Exploit the ARP Protocol, become the person in the middle of an On-path Attack.  Redirect the requests and response packet from the router, through yourself, to the Victim Host, and vice averse.
+</p>
+<img src="/assets/images/arp_spoof_diagram1.png" width="300" height="150">
 
-<img src="/assets/images/arp_spoof_diagram1.png">
-
-ifconfig to give you the interface that is connected to the Network.  
+<p>
+ifconfig to give you the interface that is connected to the Network.
+</p>
 In my case eth0.
 We now use this with arpspoof -i [IP]:
 -t gives us the target IP.  We obtain this target with arp -a:  
 
-First run target is interface:
+First run target as interface:
 The first run targets and will fool the victim.
-arpspoof -i [interface] -t [interface IP] [Gateway IP]
-arpspoof -i eth0 -t 192.168.1.72 192.168.1.254 
+<p>arpspoof -i [INTERFACE] -t [INTERFACE IP] [GATEWAY IP]</p>
+<p>arpspoof -i eth0 -t 192.168.1.72 192.168.1.254</p> 
 
 Second run target is gateway, order does not matter just make sure to reverse.
 The second run targets and will fool the router.
@@ -39,14 +41,27 @@ We need to send ARP Responses to the Router (Access Point) and the the Target Co
 
 
 
-VMWare Fusion Network:
+<h3>VMWare Fusion Network:<h3>
+<p>
 In order to properly test ARP Spoof we need two separate VMs that can talk to each other:
-1.Ping each other.
-2.Reach the internet.
-3.From our Host (My MacOS), to be able to do things like;
-a)SSH
-b)FTP: Send files to a VM or get them out (eg, logs - using something like Filezilla):
-c)Access HTTP Servers on each machine, from a browser that resides on the HOST.
+</p>
+<ol>
+    <li>Ping each other.</li>
+    <li>Reach the internet.</li>
+    <li>Use a USB Wireless Adapter</li>
+    <li>From the Hosts (& My MacOS), to be able to do things like;
+        <ol>
+            <li>SSH</li>
+            <li>FTP: POST files to a VM or GET 
+                them (eg, logs - filezilla):
+            </li>
+            <li>Access HTTP Servers on each machine, 
+                from a browser that resides on the HOST.
+            </li>
+        </ol>
+    </li>
+</ol>
+
 
 Client Machine	Interface	IPv4 Address	Subnet Mask	Slash Notation	Default Gateway
 Mac Host	en0	192.168.1.123	255.255.255.00 	/24	192.168.1.254
