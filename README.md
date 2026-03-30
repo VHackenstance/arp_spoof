@@ -8,14 +8,13 @@ Exploit the ARP Protocol, become the person in the middle of an On-path Attack. 
 <img src="/assets/images/arp_spoof_diagram1.png" width="450" height="225">
 
 <p>
-ifconfig to give you the interface that is connected to the Network.
+We can use arpspoof to give a basic idea of our goals here.
 </p>
-In my case eth0.
-We now use this with arpspoof -i [IP]:
--t gives us the target IP.  We obtain this target with arp -a:  
-
-<h4>First run target as interface:</h4>
-<p>The first run targets and will fool the victim.</p>
+<p>
+We want the Router (gateway) IP and Client (target/victim) IP or our Target Network.
+</p>
+<h4>The first run targets the victim</h4>
+<p></p>
 <p><b>arpspoof -i</b> [<i>INTERFACE</i>] <b>-t</b> [<i>INTERFACE IP</i>] [<i>GATEWAY IP</i>]</p>
 <p><b>arpspoof -i <i>eth0</i> -t <i>192.168.1.72 192.168.1.254</i></b></p> 
 
