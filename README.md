@@ -28,12 +28,12 @@ arpspoof -i [interface] -t [Gateway IP] [target IP (interface)]
 
 <h4>Creating the ARP Request Packet</h4>
 
-<p>print(packet.show())</p>
-<img src="/assets/images/packet_show_results.png" width="" height="">
+<p><b>print(packet.show())</b></p>
+<img src="/assets/images/packet_show_results.png" width="300" height="300">
 <br/>
-<p></p>print(packet.summary())</p>
-<img src="/assets/images/packet_summary_results.png" width="" height="">
-<p>What this tells us: This is an ARP Packet. Of type "is at". It is telling us this IP,
+<p><b></b></p>print(packet.summary())</b></p>
+<img src="/assets/images/packet_summary_results.png" width="400" height="50">
+<p>What this tells us: This is an ARP Packet. Of type "is at". It is telling the target this IP,
 is at this MAC Address, which is the MAC Address of our eth0.
 </p>
 
