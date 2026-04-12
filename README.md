@@ -1,5 +1,5 @@
 <h3>ARP Spoof</h3>
-<h4>Create an ARP Spoofer to test the use of on path attacks.</h4>
+<h4>Create an ARP Spoofer to test the first step in the process of on path attacks.</h4>
 <p>
 Exploit the ARP Protocol, become the Person in the Middle of an On-path Attack.  
 Redirect the requests and response packet from the router, through yourself, to the Victim Host, and vice averse.

