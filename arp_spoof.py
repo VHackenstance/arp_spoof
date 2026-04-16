@@ -2,7 +2,7 @@
 from __future__ import print_function # mitigate syntax error from using *end=""*
 import time
 import sys
-from utils.scapy_utils_commented import spoof, get_mac, check_port_forwarding, restore
+from utils.scapy_utils import spoof, get_mac, check_port_forwarding, restore
 
 # Target IP and gateway, which you would get using if(ip)config.
 target_ip = "192.168.63.174"

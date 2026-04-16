@@ -1,8 +1,9 @@
 <h3>ARP Spoof</h3>
-<h4>Create an ARP Spoofer to test the first step in the process of on path attacks.</h4>
+<h4>Create an ARP Spoofer to test the first step process of On-path Attacks.</h4>
 <p>
 Exploit the ARP Protocol, become the Person in the Middle of an On-path Attack.  
-Redirect the requests and response packet from the router, through yourself, to the Victim Host, and vice averse.
+Redirect the requests and response packet from the Router, through yourself, 
+to the Target Host, and vice averse.
 </p>
 <img src="/assets/images/arp_spoof_diagram1.png" width="450" height="225">
 <p>
@@ -22,7 +23,7 @@ arpspoof -i [interface] -t [Gateway IP] [target IP (interface)]
 
 <h4>Enable port forwarding on Linux</h4>
 <p>As the computer is not a router, this will allow packets to flow through it.</p>
-<h4>:~# echo 1 > /proc/sys/net/ipv4/ip_forward </h4>
+<h4>:~# echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward  </h4>
 
 <img src="/assets/images/arp_spoof_diagram2.png" width="450" height="225">
 
