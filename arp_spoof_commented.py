@@ -30,5 +30,9 @@ my_mac = "00-0c-29-fe-37-29"
 packet = ARP(op=2, pdst=target_interface_1, hwdst=target_mac_1, psrc=router_ip)
 # packet.show() will show us the MAC Address of the Router IP [*hwsrc*] is now our MAC.
 # packet.summary() provides similar, in the format: ARP is at [OUR_MAC_ADDRESS] says [ROUTER_IP]
-print(packet.show())
-print(packet.summary())
+# packet = ARP(op=2, pdst=target_interface_1, hwdst=target_mac_1, psrc=router_ip)
+# print(packet.show())
+# print(packet.summary())
+# Send our scapy ARP packet to the target IP address.
+# scapy.send(packet)
+
