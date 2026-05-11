@@ -7,6 +7,7 @@ cat /proc/sys/net/ipv4/ip_forward - should return 1, if 0 then enable.
 </p>
 <p>As the computer is not a router, this will allow packets to flow through it.</p>
 <h4>:~# echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward  </h4>
+<h3>There is some sort of bug where you need to reset this each time you test.</h3>
 <p>When you are finished testing, turn port forwarding off as it is a security risk
 <br/>
 echo 0 /proc/sys/net/ipv4/ip_forward
@@ -69,3 +70,9 @@ Win10VM2	Ethernet0	192.168.63.177	255.255.255.0	/24	192.168.63.2
 We want to configure VMWare Fusion in NAT mode, also known as share mode.
 
 Configure a super switch router on the HOST Mac.
+
+<h2>ISSUE!</h2>
+<h3>Found the reason for the no internet target machine</h3>
+<p>Need to manually reset ipforwarding when his occurs</p>
+<h4>:~# echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward  </h4>
+<p>Even if cat /proc/sys/net/ipv4/ip_forward, returns 1.</p>
