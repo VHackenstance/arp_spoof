@@ -72,7 +72,7 @@ We want to configure VMWare Fusion in NAT mode, also known as share mode.
 Configure a super switch router on the HOST Mac.
 
 <h2>ISSUE!</h2>
-<h3>Found the reason for the no internet target machine</h3>
+<h3>Found the reason for the **no internet** target machine</h3>
+<p>Even if cat /proc/sys/net/ipv4/ip_forward returns 1.  IP Forwarding is not enabled.</p>
 <p>Need to manually reset ipforwarding when his occurs</p>
 <h4>:~# echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward  </h4>
-<p>Even if cat /proc/sys/net/ipv4/ip_forward, returns 1.</p>
