@@ -73,6 +73,35 @@ Configure a super switch router on the HOST Mac.
 
 <h2>ISSUE!</h2>
 <h3>Found the reason for the **no internet** target machine</h3>
-<p>Even if cat /proc/sys/net/ipv4/ip_forward returns 1.  IP Forwarding is not enabled.</p>
+<p>Even if cat /proc/sys/net/ipv4/ip_forward returns 1.  IP Forwarding is, often, not enabled.</p>
 <p>Need to manually reset ipforwarding when his occurs</p>
 <h4>:~# echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward  </h4>
+
+<h3>OWASP Juice Shop</h3>
+Very good testing site as, it is http only, and it has a download page to test download interupts.
+<h4>Ignore all directions on the website.  Use...</h4>
+Sudo apt install juice-shop.
+<br/>
+<b>root@kali:~# sudo juice-shop -h</b>
+<br/>
+<h4>juice-shop</h4>
+[*] Please wait for the Juice-shop service to start.
+<br/>
+[*]
+<br/>
+[*] You might need to refresh your browser once it opens.
+<br/>
+[*]
+<br/>
+[*]  Web UI: http://127.0.0.1:42000
+<h4>stop juice-shop</h4>
+root@kali:~# juice-shop-stop -h
+<b>* juice-shop.service - juice-shop web application</b>
+<br/>
+     Loaded: loaded (/usr/lib/systemd/system/juice-shop.service; disabled; preset: disabled)
+<br/>
+     Active: inactive (dead)
+<br/>
+
+
+

