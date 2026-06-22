@@ -1,5 +1,8 @@
 <h3>ARP Spoof</h3>
 <h4>First step process of On-path Attacks.</h4>
+<h4>UPDATE: issue with remote VM not being able to connect to the internet
+</h4>
+White arp_spoof running can be solved by a restart of KL to clear caches.
 <img src="/assets/images/arp_spoof_diagram1.png" width="450" height="225">
 <h4>Enable port forwarding (Linux)</h4>
 <p>Check if port forwarding is already enabled: <br/>

