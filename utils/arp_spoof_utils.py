@@ -20,7 +20,7 @@ def check_port_forwarding():
         if value == "1":
             print("[+] Port Forwarding enabled we can proceed.")
         elif value == "0":
-            print("[-] Port Forwarding disabled. Please enable.")
+            print("[-] Port Forwarding disabled. Let's enable.")
             subprocess.call("echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward", shell=True)
             exit()
         else:
@@ -30,7 +30,7 @@ def check_port_forwarding():
         print(
             "The file /proc/sys/net/ipv4/ip_forward was not found. System may not support IP forwarding or is not Linux.")
     except Exception as e:
-        print("An error occurred while trying to connect to IPv4. " + str(e))
+        print("An error occurred while trying to connect. " + str(e))
 
 
 
